@@ -13,7 +13,7 @@ pkgver=${_majorver}.${_minorver}.u${_updatever}
 pkgrel=1
 arch=('x86_64')
 url='https://openjdk.java.net/'
-license=('custom')
+license=('LicenseRef-Java')
 makedepends=(
   'alsa-lib'
   'bash'
