@@ -29,6 +29,9 @@ makedepends=(
   'unzip'
   'zip'
 )
+optdepends=(
+  'gvfs: open links e.g. hyperlinks'
+)
 options=(!lto)
 source=(https://github.com/openjdk/jdk${_majorver}u/archive/refs/tags/jdk${_majorver}u${_minorver}-b${_updatever}.tar.gz
         gcc11.patch)
