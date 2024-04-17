@@ -82,7 +82,8 @@ build() {
     --with-zlib=system \
     --with-extra-cflags="${CFLAGS}" \
     --with-extra-cxxflags="${CXXFLAGS}" \
-    --with-extra-ldflags="${LDFLAGS}"
+    --with-extra-ldflags="${LDFLAGS}" \
+    --with-vendor-name="Arch Linux"
 
   # These help to debug builds: LOG=trace HOTSPOT_BUILD_JOBS=1
   # Without 'DEBUG_BINARIES', i686 won't build: http://mail.openjdk.java.net/pipermail/core-libs-dev/2013-July/019203.html
