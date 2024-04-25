@@ -3,14 +3,14 @@
 # Maintainer: Guillaume ALAUX <guillaume@archlinux.org>
 # Contributor: Boyan Ding <stu_dby@126.com>
 
-pkgname=('jre8-openjdk-headless' 'jre8-openjdk' 'jdk8-openjdk' 'openjdk8-src' 'openjdk8-doc')
-pkgbase=java8-openjdk
+pkgname=('jre7-openjdk-headless' 'jre7-openjdk' 'jdk7-openjdk' 'openjdk7-src' 'openjdk7-doc')
+pkgbase=java7-openjdk
 
-_majorver=8
-_minorver=412
-_updatever=08
+_majorver=7
+_minorver=351
+_updatever=01
 pkgver=${_majorver}.${_minorver}.u${_updatever}
-pkgrel=1
+pkgrel=0
 arch=('x86_64')
 url='https://openjdk.java.net/'
 license=('LicenseRef-Java')
@@ -33,8 +33,7 @@ optdepends=(
   'gvfs: open links e.g. hyperlinks'
 )
 options=(!lto)
-source=(https://github.com/openjdk/jdk${_majorver}u/archive/refs/tags/jdk${_majorver}u${_minorver}-b${_updatever}.tar.gz
-        gcc11.patch)
+source=(https://github.com/openjdk/jdk${_majorver}u/archive/refs/tags/jdk${_majorver}u${_minorver}-b${_updatever}.tar.gz)
 b2sums=('caff1c2afcfd450e2cf59e0006f1f80d88707868fbb6bb1e1b9fbb74c0b2f07c879fd859228526f71f0236aebdb9daa139404582ad8038316c898590cde9f325'
         '9679e4dfb6027a87376081489c09810812d6849573afac4ea96abe3a3e00ca5b6af7d0ffb010c43b93cfa913f9e97fbb9f11e19fcc86a89b4548442671c32da1')
 
@@ -43,24 +42,24 @@ case "${CARCH}" in
   'i686'  ) _JARCH=i386  ; _DOC_ARCH=x86    ;;
 esac
 
-_jdkname=openjdk8
-_jvmdir=/usr/lib/jvm/java-8-openjdk
-_prefix="jdk8u/image"
-_imgdir="${_prefix}/jvm/openjdk-1.8.0_$(printf '%.2d' ${_minorver})"
+_jdkname=openjdk7
+_jvmdir=/usr/lib/jvm/java-7-openjdk
+_prefix="jdk7u/image"
+_imgdir="${_prefix}/jvm/openjdk-1.7.0_$(printf '%.2d' ${_minorver})"
 _nonheadless=(bin/policytool
               lib/${_JARCH}/libjsound.so
               lib/${_JARCH}/libjsoundalsa.so
               lib/${_JARCH}/libsplashscreen.so)
 
 prepare() {
-  cd jdk8u-jdk${_majorver}u${_minorver}-b${_updatever}
+  cd jdk7u-jdk${_majorver}u${_minorver}-b${_updatever}
 
   # Fix build with C++17 (Fedora)
-  patch -Np1 -i "${srcdir}"/gcc11.patch
+  # patch -Np1 -i "${srcdir}"/gcc11.patch
 }
 
 build() {
-  cd jdk8u-jdk${_majorver}u${_minorver}-b${_updatever}
+  cd jdk7u-jdk${_majorver}u${_minorver}-b${_updatever}
 
   unset JAVA_HOME
   # http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=1346
@@ -108,35 +107,35 @@ build() {
 }
 
 check() {
-  cd jdk8u-jdk${_majorver}u${_minorver}-b${_updatever}
+  cd jdk7u-jdk${_majorver}u${_minorver}-b${_updatever}
   #make -k test
 }
 
-package_jre8-openjdk-headless() {
-  pkgdesc='OpenJDK Java 8 headless runtime environment'
+package_jre7-openjdk-headless() {
+  pkgdesc='OpenJDK Java 7 headless runtime environment'
   depends=('java-runtime-common' 'ca-certificates-utils' 'nss')
   optdepends=('java-rhino: for some JavaScript support')
-  provides=('java-runtime-headless=8' 'java-runtime-headless-openjdk=8')
+  provides=('java-runtime-headless=7' 'java-runtime-headless-openjdk=7')
   # Upstream config files that should go to etc and get backup
-  _backup_etc=(etc/java-8-openjdk/${_JARCH}/jvm.cfg
-               etc/java-8-openjdk/calendars.properties
-               etc/java-8-openjdk/content-types.properties
-               etc/java-8-openjdk/flavormap.properties
-               etc/java-8-openjdk/images/cursors/cursors.properties
-               etc/java-8-openjdk/logging.properties
-               etc/java-8-openjdk/management/jmxremote.access
-               etc/java-8-openjdk/management/jmxremote.password
-               etc/java-8-openjdk/management/management.properties
-               etc/java-8-openjdk/management/snmp.acl
-               etc/java-8-openjdk/net.properties
-               etc/java-8-openjdk/psfont.properties.ja
-               etc/java-8-openjdk/psfontj2d.properties
-               etc/java-8-openjdk/security/java.policy
-               etc/java-8-openjdk/security/java.security
-               etc/java-8-openjdk/sound.properties)
-  replaces=('jre8-openjdk-headless-wm')
+  _backup_etc=(etc/java-7-openjdk/${_JARCH}/jvm.cfg
+               etc/java-7-openjdk/calendars.properties
+               etc/java-7-openjdk/content-types.properties
+               etc/java-7-openjdk/flavormap.properties
+               etc/java-7-openjdk/images/cursors/cursors.properties
+               etc/java-7-openjdk/logging.properties
+               etc/java-7-openjdk/management/jmxremote.access
+               etc/java-7-openjdk/management/jmxremote.password
+               etc/java-7-openjdk/management/management.properties
+               etc/java-7-openjdk/management/snmp.acl
+               etc/java-7-openjdk/net.properties
+               etc/java-7-openjdk/psfont.properties.ja
+               etc/java-7-openjdk/psfontj2d.properties
+               etc/java-7-openjdk/security/java.policy
+               etc/java-7-openjdk/security/java.security
+               etc/java-7-openjdk/sound.properties)
+  #replaces=('jre8-openjdk-headless-wm')
   backup=(${_backup_etc[@]})
-  install=install_jre8-openjdk-headless.sh
+  install=install_jre7-openjdk-headless.sh
 
   cd ${_imgdir}/jre
 
@@ -187,10 +186,10 @@ package_jre8-openjdk-headless() {
   done
 }
 
-package_jre8-openjdk() {
-  pkgdesc='OpenJDK Java 8 full runtime environment'
+package_jre7-openjdk() {
+  pkgdesc='OpenJDK Java 7 full runtime environment'
   depends=(
-    "jre8-openjdk-headless=${pkgver}-${pkgrel}"
+    "jre7-openjdk-headless=${pkgver}-${pkgrel}"
     'xdg-utils'
     'hicolor-icon-theme'
     'giflib'
@@ -199,9 +198,10 @@ package_jre8-openjdk() {
               'alsa-lib: for basic sound support'
               'gtk3: for the Gtk+ look and feel - desktop usage'
               'java8-openjfx: for JavaFX GUI components support')
-  provides=('java-runtime=8' 'java-runtime-openjdk=8')
-  install=install_jre8-openjdk.sh
-  replaces=('jre8-openjdk-wm')
+	      # TODO: Make java7-openjfx
+  provides=('java-runtime=7' 'java-runtime-openjdk=7')
+  install=install_jre7-openjdk.sh
+  #replaces=('jre8-openjdk-wm')
 
   cd ${_imgdir}/jre
 
@@ -225,12 +225,12 @@ package_jre8-openjdk() {
   ln -sf /usr/share/licenses/${pkgbase} "${pkgdir}/usr/share/licenses/${pkgname}"
 }
 
-package_jdk8-openjdk() {
-  pkgdesc='OpenJDK Java 8 development kit'
-  depends=('java-environment-common' "jre8-openjdk=${pkgver}-${pkgrel}")
-  provides=('java-environment=8' 'java-environment-openjdk=8')
-  replaces=('jdk8-openjdk-wm')
-  install=install_jdk8-openjdk.sh
+package_jdk7-openjdk() {
+  pkgdesc='OpenJDK Java 7 development kit'
+  depends=('java-environment-common' "jre7-openjdk=${pkgver}-${pkgrel}")
+  provides=('java-environment=7' 'java-environment-openjdk=7')
+  #replaces=('jdk8-openjdk-wm')
+  install=install_jdk7-openjdk.sh
 
   cd ${_imgdir}
 
@@ -269,14 +269,14 @@ package_jdk8-openjdk() {
   ln -sf /usr/share/licenses/${pkgbase} "${pkgdir}/usr/share/licenses/${pkgname}"
 }
 
-package_openjdk8-src() {
-  pkgdesc='OpenJDK Java 8 sources'
+package_openjdk7-src() {
+  pkgdesc='OpenJDK Java 7 sources'
 
   install -D "${srcdir}/${_imgdir}/src.zip" "${pkgdir}${_jvmdir}/src.zip"
 }
 
-package_openjdk8-doc() {
-  pkgdesc='OpenJDK Java 8 documentation'
+package_openjdk7-doc() {
+  pkgdesc='OpenJDK Java 7 documentation'
 
   install -d -m 755 "${pkgdir}/usr/share/doc/${pkgbase}/"
   cp -r "${srcdir}"/jdk8u-jdk${_majorver}u${_minorver}-b${_updatever}/build/linux-${_DOC_ARCH}-normal-server-release/docs/* \
