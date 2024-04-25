@@ -1,4 +1,4 @@
-THIS_JRE='java-8-openjdk/jre'
+THIS_JRE='java-7-openjdk/jre'
 
 fix_default() {
   if [ ! -x /usr/bin/java ]; then
